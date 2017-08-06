@@ -27,7 +27,7 @@ func ExampleEncrypt() {
 	th.SetContentType("text/plain", nil)
 
 	// Create a new PGP/MIME writer
-	var ciphertext struct{*message.Writer}
+	var ciphertext struct{ *message.Writer }
 	cleartext := pgpmime.Encrypt(&ciphertext, textproto.MIMEHeader(th.Header), to, nil, nil)
 
 	// Add the PGP/MIME Content-Type header field to the mail header
@@ -73,7 +73,7 @@ func ExampleSign() {
 	bh := mail.NewTextHeader()
 	bh.SetContentType("text/plain", nil)
 
-	var signed struct{*message.Writer}
+	var signed struct{ *message.Writer }
 	body := pgpmime.Sign(&signed, textproto.MIMEHeader(bh.Header), e, nil)
 
 	mh.Set("Content-Type", body.ContentType())

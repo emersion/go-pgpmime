@@ -2,11 +2,11 @@ package pgpmime
 
 import (
 	"bytes"
+	"crypto"
 	"io"
 	"mime"
 	"mime/multipart"
 	"net/textproto"
-	"crypto"
 
 	"golang.org/x/crypto/openpgp"
 	"golang.org/x/crypto/openpgp/packet"
@@ -35,10 +35,10 @@ func hashName(h crypto.Hash) string {
 
 type signWriter struct {
 	multipart *multipart.Writer
-	body io.WriteCloser
+	body      io.WriteCloser
 	signature <-chan io.Reader
 
-	h textproto.MIMEHeader
+	h      textproto.MIMEHeader
 	signer *openpgp.Entity
 	config *packet.Config
 }
@@ -59,7 +59,7 @@ func (sw *signWriter) open() error {
 		ch <- &b
 	}()
 
-	sw.body = struct{
+	sw.body = struct {
 		io.Writer
 		io.Closer
 	}{
@@ -108,7 +108,7 @@ func (sw *signWriter) Close() error {
 func (sw *signWriter) ContentType() string {
 	return mime.FormatMediaType("multipart/signed", map[string]string{
 		"boundary": sw.multipart.Boundary(),
-		"micalg": "pgp-" + hashName(sw.config.Hash()),
+		"micalg":   "pgp-" + hashName(sw.config.Hash()),
 		"protocol": "application/pgp-signature",
 	})
 }
@@ -118,7 +118,7 @@ func Sign(w io.Writer, h textproto.MIMEHeader, signer *openpgp.Entity, config *p
 	return &signWriter{
 		multipart: multipart.NewWriter(w),
 
-		h: h,
+		h:      h,
 		signer: signer,
 		config: config,
 	}

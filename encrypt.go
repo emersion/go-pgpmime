@@ -13,11 +13,11 @@ import (
 
 type encryptWriter struct {
 	multipart *multipart.Writer
-	armored io.WriteCloser
+	armored   io.WriteCloser
 	cleartext io.WriteCloser
 
-	h textproto.MIMEHeader
-	to []*openpgp.Entity
+	h      textproto.MIMEHeader
+	to     []*openpgp.Entity
 	signed *openpgp.Entity
 	config *packet.Config
 }
@@ -95,8 +95,8 @@ func Encrypt(w io.Writer, h textproto.MIMEHeader, to []*openpgp.Entity, signed *
 	return &encryptWriter{
 		multipart: multipart.NewWriter(w),
 
-		h: h,
-		to: to,
+		h:      h,
+		to:     to,
 		signed: signed,
 		config: config,
 	}
