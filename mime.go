@@ -21,7 +21,6 @@ func writeMIMEHeader(w io.Writer, header textproto.MIMEHeader) error {
 			fmt.Fprintf(&b, "%s: %s\r\n", k, v)
 		}
 	}
-	fmt.Fprintf(&b, "\r\n")
 	_, err := io.Copy(w, &b)
 	return err
 }
