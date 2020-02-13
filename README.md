@@ -5,6 +5,8 @@
 
 A [PGP/MIME](https://tools.ietf.org/html/rfc3156) library written in Go.
 
+> **Note**: this library is deprecated in favor of [go-pgpmail](https://github.com/emersion/go-pgpmail).
+
 ## License
 
 MIT
